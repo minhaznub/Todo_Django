@@ -1,0 +1,30 @@
+<!-- filepath: /d:/Django todo app/app/todo_app/templates/tasks/edit_task.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Edit Task</h1>
+        <form method="POST" action="{% url 'edit_task' task.id %}" class="form-inline justify-content-center mb-4">
+            {% csrf_token %}
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" name="task_name" class="form-control" value="{{ task.name }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Save Changes</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Add Task To List</h1>
+        <form method="POST" action="{% url 'add_task' %}" class="form-inline justify-content-center mb-4">
+            {% csrf_token %}
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" name="task_name" class="form-control" placeholder="Enter a new task" required>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Add Task</button>
+        </form>
+
+        <h2>Your Tasks:</h2>
+        <ul class="list-group">
+            {% for task in tasks %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        {{ task.name }}
+                        <span class="badge badge-{% if task.status == 'done' %}success{% elif task.status == 'inprogress' %}warning{% else %}secondary{% endif %} ml-2">
+                            {{ task.get_status_display }}
+                        </span>
+                    </div>
+                    <div>
+                        <a href="{% url 'update_task_status' task.id 'new' %}" class="btn btn-secondary btn-sm ml-2">New</a>
+                        <a href="{% url 'update_task_status' task.id 'inprogress' %}" class="btn btn-warning btn-sm ml-2">In Progress</a>
+                        <a href="{% url 'update_task_status' task.id 'done' %}" class="btn btn-success btn-sm ml-2">Done</a>
+                        <a href="{% url 'edit_task' task.id %}" class="btn btn-info btn-sm ml-2">Edit</a>
+                        <a href="{% url 'delete_task' task.id %}" class="btn btn-danger btn-sm ml-2">Delete</a>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No tasks available.</li>
+            {% endfor %}
+        </ul>
+
+        <p class="text-center mt-4">Running on: <span class="badge badge-info">{{ vm_name }}</span></p>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
