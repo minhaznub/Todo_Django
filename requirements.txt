@@ -1,3 +1,7 @@
-Django>=3.2,<4.0
+Django==2.1.15
 django-pyodbc-azure==2.1.0.0
-pyodbc
+pyodbc==5.2.0
+pytz==2024.2
+setuptools==75.8.0
+gunicorn
+psycopg2-binary
